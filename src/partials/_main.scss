@@ -3,18 +3,25 @@ main {
   padding: 50px 0;
 
   .game-field {
-    @include setWH(50%, 100%);
+    @include setFlexContainer(column, flex-start, stretch);
+    @include setWH(40%, none);
     margin: auto;
+
+    .card-container {
+      width: calc(100% / 5);
+      padding: 20px 0;
+    }
   } //game-filed
 
   // carta che deve girare al click del mouse
   .card {
-    background-color: $backCardColor;
     width: $cardWidth;
     height: $cardHeight;
+    margin: auto;
     border: 3px solid #2B2729;
-    perspective: 1000px;
+    //perspective: 1000px;
     border-radius: 3px;
+    background-color: $backCardColor;
     cursor: pointer;
 
     .inner-card {
@@ -23,12 +30,13 @@ main {
       transition: transform 0.8s;
       transform-style: preserve-3d;
 
+      // commenta per debuggare
       .front-card {
         @include setBgImage(front_card, png, no-repeat, contain, center);
       } //front-card
 
       .back-card {
-        transform: rotateY(180deg);
+        transform: rotateY(180deg); // commenta per debuggare
         text-align: center;
         line-height: $cardHeight;
 

@@ -25,17 +25,21 @@
       <!-- main -->
       <main>
         <div class="game-field">
+
           <!-- carta doppio bg che ruota -->
-          <div class="card" @click="flipCard">
-            <div
-            class="inner-card pos-rel"
-            :style="flip ? 'transform:rotateY(180deg)' : ''">
-              <div class="front-card"></div>
-              <div class="back-card">
-                <i class="fas fa-cat"></i>
+          <div class="card-container" v-for="index in totalCards.length">
+            <div class="card" @click="flipCard(index-1)">
+              <div
+              class="inner-card pos-rel"
+              :style="totalCards[index-1].active ? 'transform:rotateY(180deg)' : ''">
+                <div class="front-card"></div>
+                <div class="back-card">
+                  <i :class="totalCards[index-1].class"></i>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </main>
       <!-- /main -->

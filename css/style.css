@@ -29,17 +29,26 @@ main {
   padding: 50px 0;
 }
 main .game-field {
-  width: 50%;
-  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: wrap;
+  width: 40%;
+  height: none;
   margin: auto;
 }
+main .game-field .card-container {
+  width: calc(100% / 5);
+  padding: 20px 0;
+}
 main .card {
-  background-color: #F5F5F5;
   width: 100px;
   height: 125px;
+  margin: auto;
   border: 3px solid #2B2729;
-  perspective: 1000px;
   border-radius: 3px;
+  background-color: #F5F5F5;
   cursor: pointer;
 }
 main .card .inner-card {

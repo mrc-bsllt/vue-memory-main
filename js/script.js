@@ -1850,12 +1850,44 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   el: "#app",
   data: {
+    // mostro/nascondo il terreno di gioco
     startGame: true,
-    flip: false
+    // carte
+    totalCards: [{
+      "class": "fas fa-cat",
+      active: false
+    }, {
+      "class": "fas fa-crow",
+      active: false
+    }, {
+      "class": "fas fa-dog",
+      active: false
+    }, {
+      "class": "fas fa-hippo",
+      active: false
+    }, {
+      "class": "fas fa-bicycle",
+      active: false
+    }, {
+      "class": "fas fa-car-side",
+      active: false
+    }, {
+      "class": "fas fa-helicopter",
+      active: false
+    }, {
+      "class": "fas fa-rocket",
+      active: false
+    }, {
+      "class": "fas fa-gift",
+      active: false
+    }, {
+      "class": "fas fa-tshirt",
+      active: false
+    }]
   },
   methods: {
-    flipCard: function flipCard() {
-      this.flip = true;
+    flipCard: function flipCard(index) {
+      this.totalCards[index].active = true;
     }
   },
   mounted: function mounted() {}
