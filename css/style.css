@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  background-color: #A3ADB8;
+}
+
+#game-window {
+  width: 100%;
+  height: 100%;
+}
+
+.pos-rel {
+  position: relative;
+}
+
+header {
+  height: 100px;
+  background-color: rgba(43, 39, 41, 0.7);
+}
+
+main {
+  height: calc(100% - 100px - 50px);
+  padding: 50px 0;
+}
+main .game-field {
+  width: 50%;
+  height: 100%;
+  margin: auto;
+}
+
+.card {
+  background-color: #F5F5F5;
+  width: 100px;
+  height: 125px;
+  border: 3px solid #2B2729;
+  perspective: 1000px;
+  /* Remove this if you don't want the 3D effect */
+  border-radius: 3px;
+}
+.card:hover, .card .inner-card:hover {
+  transform: rotateY(180deg);
+}
+.card .inner-card {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.front-card, .back-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  /* Safari */
+  backface-visibility: hidden;
+}
+
+.front-card {
+  background-image: url("../img/front_card.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.back-card {
+  transform: rotateY(180deg);
+  text-align: center;
+  line-height: 125px;
+}
+.back-card i {
+  font-size: 50px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(43, 39, 41, 0.7);
+}

@@ -1,0 +1,15 @@
+@mixin setWH($width, $height) {
+  width: $width;
+  height: $height;
+}
+@mixin posAbsolute($top, $left) {
+  position: absolute;
+  top: $top;
+  left: $left;
+}
+@mixin setBgImage($name, $format, $repeat, $size, $position) {
+  background-image: url('../img/#{$name}.#{$format}');
+  background-repeat: $repeat;
+  background-size: $size;
+  background-position: $position;
+}

@@ -1,0 +1,45 @@
+main {
+  height: calc(100% - #{$headerHeight} - #{$footerHeight});
+  padding: 50px 0;
+
+  .game-field {
+    @include setWH(50%, 100%);
+    margin: auto;
+  }
+}
+.card {
+  background-color: $backCardColor;
+  width: $cardWidth;
+  height: $cardHeight;
+  border: 3px solid #2B2729;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  border-radius: 3px;
+  &:hover, .inner-card:hover {
+    transform: rotateY(180deg);
+  }
+
+  .inner-card {
+    @include setWH(100%, 100%);
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+}
+.front-card, .back-card {
+  @include posAbsolute(0, 0);
+  @include setWH(100%, 100%);
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+.front-card {
+  @include setBgImage(front_card, png, no-repeat, contain, center);
+}
+.back-card {
+  transform: rotateY(180deg);
+  text-align: center;
+  line-height: $cardHeight;
+
+  i {
+    font-size: 50px;
+  }
+}
