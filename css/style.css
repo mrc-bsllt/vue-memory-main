@@ -55,12 +55,19 @@ main .card .inner-card {
   transition: transform 0.8s;
   transform-style: preserve-3d;
 }
+main .card .inner-card .front-card {
+  background-image: url("../img/front_card.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
 main .card .inner-card .back-card {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  transform: rotateY(180deg);
 }
 main .card .inner-card .back-card i {
   font-size: 50px;

@@ -1903,7 +1903,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   //fine data
   methods: {
     flipCard: function flipCard(index) {
-      this.chosenCards[index].active = true;
+      this.playingCards[index].active = true;
       this.$forceUpdate();
     },
     //fine funzione
@@ -1915,8 +1915,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
       var self = this;
 
       while (self.chosenCards.length < self.numberCardsToChoose) {
-        var index = self.randomNumber(0, self.totalCards.length - 1);
-        var element = self.totalCards[index];
+        var number = self.randomNumber(0, self.totalCards.length - 1);
+        var element = self.totalCards[number];
 
         if (!self.chosenCards.includes(element)) {
           element.active = false;
@@ -1926,11 +1926,25 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
       }
 
       ;
-    }
+    } //fine funzione
+
   },
   //fine methods
   mounted: function mounted() {
     this.chooseCards();
+    var self = this;
+
+    while (self.playingCards.length < self.numberCardsToChoose * 2) {
+      var number = this.randomNumber(0, self.numberCardsToChoose - 1);
+      var element = self.chosenCards[number];
+
+      if (element.availability != 0) {
+        self.playingCards.push(element);
+        element.availability--;
+      }
+    }
+
+    ;
   } //fine mounted
 
 }); //fine istanza vue

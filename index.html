@@ -30,7 +30,7 @@
           <div
           class="card-container"
           :style="'width:calc(100% / ' + cardsDivider + ')'"
-          v-for="(card,index) in chosenCards">
+          v-for="(card,index) in playingCards">
             <div class="card" @click="flipCard(index)">
               <div
               class="inner-card pos-rel"

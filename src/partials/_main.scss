@@ -29,13 +29,13 @@ main {
       transform-style: preserve-3d;
 
       // commenta per debuggare
-      // .front-card {
-      //   @include setBgImage(front_card, png, no-repeat, contain, center);
-      // } //front-card
+      .front-card {
+        @include setBgImage(front_card, png, no-repeat, contain, center);
+      } //front-card
 
       .back-card {
         @include setFlexContainer(row, center, center);
-        // transform: rotateY(180deg); // commenta per debuggare
+        transform: rotateY(180deg); // commenta per debuggare
 
         i {
           font-size: 50px;

@@ -81,7 +81,7 @@ var app = new Vue(
     methods: {
 
       flipCard: function(index) {
-        this.chosenCards[index].active = true;
+        this.playingCards[index].active = true;
         this.$forceUpdate();
       }, //fine funzione
 
@@ -94,8 +94,8 @@ var app = new Vue(
 
       while(self.chosenCards.length < self.numberCardsToChoose) {
 
-        let index = self.randomNumber(0, self.totalCards.length-1);
-        const element = self.totalCards[index];
+        let number = self.randomNumber(0, self.totalCards.length-1);
+        const element = self.totalCards[number];
 
         if(!self.chosenCards.includes(element)) {
           element.active = false;
@@ -103,12 +103,26 @@ var app = new Vue(
           self.chosenCards.push(element);
         }
       };
-    }
+    } //fine funzione
 
   }, //fine methods
 
     mounted: function() {
+
       this.chooseCards();
+      const self = this;
+
+      while(self.playingCards.length < self.numberCardsToChoose*2) {
+
+        let number = this.randomNumber(0, self.numberCardsToChoose-1);
+        let element = self.chosenCards[number];
+
+        if(element.availability != 0) {
+
+          self.playingCards.push(element);
+          element.availability--;
+        }
+      };
     } //fine mounted
 
   }); //fine istanza vue
