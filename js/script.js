@@ -1852,46 +1852,88 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   data: {
     // mostro/nascondo il terreno di gioco
     startGame: true,
+    fieldWidth: 40,
+    cardsDivider: 5,
+    numberCardsToChoose: 10,
     // carte
     totalCards: [{
-      "class": "fas fa-cat",
-      active: false
+      "class": "fas fa-cat"
     }, {
-      "class": "fas fa-crow",
-      active: false
+      "class": "fas fa-crow"
     }, {
-      "class": "fas fa-dog",
-      active: false
+      "class": "fas fa-dog"
     }, {
-      "class": "fas fa-hippo",
-      active: false
+      "class": "fas fa-hippo"
     }, {
-      "class": "fas fa-bicycle",
-      active: false
+      "class": "fas fa-bicycle"
     }, {
-      "class": "fas fa-car-side",
-      active: false
+      "class": "fas fa-car-side"
     }, {
-      "class": "fas fa-helicopter",
-      active: false
+      "class": "fas fa-helicopter"
     }, {
-      "class": "fas fa-rocket",
-      active: false
+      "class": "fas fa-rocket"
     }, {
-      "class": "fas fa-gift",
-      active: false
+      "class": "fas fa-gift"
     }, {
-      "class": "fas fa-tshirt",
-      active: false
-    }]
+      "class": "fas fa-tshirt"
+    }, {
+      "class": "fas fa-dizzy"
+    }, {
+      "class": "fas fa-angry"
+    }, {
+      "class": "fas fa-grimace"
+    }, {
+      "class": "fas fa-grin-tears"
+    }, {
+      "class": "fas fa-grin-tongue-squint"
+    }, {
+      "class": "fas fa-surprise"
+    }, {
+      "class": "fas fa-anchor"
+    }, {
+      "class": "fas fa-ice-cream"
+    }, {
+      "class": "fas fa-lemon"
+    }, {
+      "class": "fas fa-fish"
+    }],
+    chosenCards: [],
+    playingCards: []
   },
+  //fine data
   methods: {
     flipCard: function flipCard(index) {
-      this.totalCards[index].active = true;
+      this.chosenCards[index].active = true;
+      this.$forceUpdate();
+    },
+    //fine funzione
+    randomNumber: function randomNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    },
+    //fine funzione
+    chooseCards: function chooseCards() {
+      var self = this;
+
+      while (self.chosenCards.length < self.numberCardsToChoose) {
+        var index = self.randomNumber(0, self.totalCards.length - 1);
+        var element = self.totalCards[index];
+
+        if (!self.chosenCards.includes(element)) {
+          element.active = false;
+          element.availability = 2;
+          self.chosenCards.push(element);
+        }
+      }
+
+      ;
     }
   },
-  mounted: function mounted() {}
-});
+  //fine methods
+  mounted: function mounted() {
+    this.chooseCards();
+  } //fine mounted
+
+}); //fine istanza vue
 
 /***/ }),
 

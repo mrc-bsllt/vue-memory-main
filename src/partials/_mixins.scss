@@ -15,8 +15,8 @@
 }
 @mixin setFlexContainer($direction, $content, $items) {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
+  flex-direction: $direction;
+  justify-content: $content;
+  align-items: $items;
   flex-wrap: wrap;
 }

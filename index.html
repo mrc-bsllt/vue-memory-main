@@ -24,17 +24,20 @@
 
       <!-- main -->
       <main>
-        <div class="game-field">
+        <div class="game-field" :style="'width:' + fieldWidth + '%'">
 
           <!-- carta doppio bg che ruota -->
-          <div class="card-container" v-for="index in totalCards.length">
-            <div class="card" @click="flipCard(index-1)">
+          <div
+          class="card-container"
+          :style="'width:calc(100% / ' + cardsDivider + ')'"
+          v-for="(card,index) in chosenCards">
+            <div class="card" @click="flipCard(index)">
               <div
               class="inner-card pos-rel"
-              :style="totalCards[index-1].active ? 'transform:rotateY(180deg)' : ''">
+              :style="card.active ? 'transform:rotateY(180deg)' : ''">
                 <div class="front-card"></div>
                 <div class="back-card">
-                  <i :class="totalCards[index-1].class"></i>
+                  <i :class="card.class"></i>
                 </div>
               </div>
             </div>

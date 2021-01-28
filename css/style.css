@@ -34,12 +34,9 @@ main .game-field {
   justify-content: flex-start;
   align-items: stretch;
   flex-wrap: wrap;
-  width: 40%;
-  height: none;
   margin: auto;
 }
 main .game-field .card-container {
-  width: calc(100% / 5);
   padding: 20px 0;
 }
 main .card {
@@ -58,16 +55,12 @@ main .card .inner-card {
   transition: transform 0.8s;
   transform-style: preserve-3d;
 }
-main .card .inner-card .front-card {
-  background-image: url("../img/front_card.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-}
 main .card .inner-card .back-card {
-  transform: rotateY(180deg);
-  text-align: center;
-  line-height: 125px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 main .card .inner-card .back-card i {
   font-size: 50px;
