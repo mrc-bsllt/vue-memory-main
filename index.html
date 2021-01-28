@@ -26,8 +26,10 @@
       <main>
         <div class="game-field">
           <!-- carta doppio bg che ruota -->
-          <div class="card">
-            <div class="inner-card pos-rel">
+          <div class="card" @click="flipCard">
+            <div
+            class="inner-card pos-rel"
+            :style="flip ? 'transform:rotateY(180deg)' : ''">
               <div class="front-card"></div>
               <div class="back-card">
                 <i class="fas fa-cat"></i>

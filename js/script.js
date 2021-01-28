@@ -1850,9 +1850,14 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   el: "#app",
   data: {
-    startGame: true
+    startGame: true,
+    flip: false
   },
-  methods: {},
+  methods: {
+    flipCard: function flipCard() {
+      this.flip = true;
+    }
+  },
   mounted: function mounted() {}
 });
 

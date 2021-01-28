@@ -5,41 +5,44 @@ main {
   .game-field {
     @include setWH(50%, 100%);
     margin: auto;
-  }
-}
-.card {
-  background-color: $backCardColor;
-  width: $cardWidth;
-  height: $cardHeight;
-  border: 3px solid #2B2729;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  border-radius: 3px;
-  &:hover, .inner-card:hover {
-    transform: rotateY(180deg);
-  }
+  } //game-filed
 
-  .inner-card {
-    @include setWH(100%, 100%);
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-  }
-}
-.front-card, .back-card {
-  @include posAbsolute(0, 0);
-  @include setWH(100%, 100%);
-  -webkit-backface-visibility: hidden; /* Safari */
-  backface-visibility: hidden;
-}
-.front-card {
-  @include setBgImage(front_card, png, no-repeat, contain, center);
-}
-.back-card {
-  transform: rotateY(180deg);
-  text-align: center;
-  line-height: $cardHeight;
+  // carta che deve girare al click del mouse
+  .card {
+    background-color: $backCardColor;
+    width: $cardWidth;
+    height: $cardHeight;
+    border: 3px solid #2B2729;
+    perspective: 1000px;
+    border-radius: 3px;
+    cursor: pointer;
 
-  i {
-    font-size: 50px;
-  }
-}
+    .inner-card {
+      @include setWH(100%, 100%);
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+
+      .front-card {
+        @include setBgImage(front_card, png, no-repeat, contain, center);
+      } //front-card
+
+      .back-card {
+        transform: rotateY(180deg);
+        text-align: center;
+        line-height: $cardHeight;
+
+        i {
+          font-size: 50px;
+        }
+      } //back-card
+
+      .front-card, .back-card {
+        @include posAbsolute(0, 0);
+        @include setWH(100%, 100%);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      } //front-card e back-card comunes
+    } //inner-card
+  } //card
+} //main
