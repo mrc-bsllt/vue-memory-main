@@ -6,10 +6,12 @@ var app = new Vue(
     el: "#app",
     data: {
       // mostro/nascondo il terreno di gioco
-      startGame: true,
-      fieldWidth: 40,
-      cardsDivider: 5,
-      numberCardsToChoose: 10,
+      options: ["Normal", "Hard"],
+      startGame: false,
+      fieldWidth: null,
+      cardsDivider: null,
+      numberCardsToChoose: null,
+      timeoutSeconds: null,
       score: 0,
       comparatorArray: [],
       //secondChoice: false,
@@ -83,6 +85,30 @@ var app = new Vue(
     }, //fine data
     methods: {
 
+      startGameFunction: function(index) {
+        const self = this;
+
+        switch(self.options[index]) {
+          case "Normal":
+            self.fieldWidth = 40;
+            self.cardsDivider = 5;
+            self.numberCardsToChoose = 10;
+            self.timeoutSeconds = 2000;
+            break;
+
+          case "Hard":
+            self.fieldWidth = 80;
+            self.cardsDivider = 10;
+            self.numberCardsToChoose = 20;
+            self.timeoutSeconds = 5000;
+            break;
+        }
+
+        self.startGame = true;
+        self.prepareField();
+
+      }, //fine funzinoe
+
       flipCard: function(index) {
         const self = this;
         const element = self.playingCards[index];
@@ -103,85 +129,96 @@ var app = new Vue(
         this.$forceUpdate();
       }, //fine funzione
 
-    randomNumber: function(min, max) {
-      return Math.floor(Math.random()*(max - min + 1) + min);
-    }, //fine funzione
+      randomNumber: function(min, max) {
+        return Math.floor(Math.random()*(max - min + 1) + min);
+      }, //fine funzione
 
-    chooseCards: function () {
-      const self = this;
-      while(self.chosenCards.length < self.numberCardsToChoose) {
+      chooseCards: function () {
+        const self = this;
+        while(self.chosenCards.length < self.numberCardsToChoose) {
 
-        let index = self.randomNumber(0, self.totalCards.length-1);
-        const element = self.totalCards[index];
+          let index = self.randomNumber(0, self.totalCards.length-1);
+          const element = self.totalCards[index];
 
-        if(!self.chosenCards.includes(element)) {
-          element.availability = 2;
-          self.chosenCards.push(element);
-          //console.log(element);
-        }
-      }
-    }, //fine funzione
-
-    checkResult: function() {
-      const self = this;
-
-      if(self.comparatorArray[0] == self.comparatorArray[1]) {
-        self.score++;
-
-        self.playingCards.forEach(
-          (element) => {
-            if(element.class == self.comparatorArray[0]) {
-
-              element.found = true;
-              console.log(self.playingCards);
-            }
+          if(!self.chosenCards.includes(element)) {
+            element.availability = 2;
+            self.chosenCards.push(element);
+            //console.log(element);
           }
-        );
+        }
+      }, //fine funzione
 
-        self.comparatorArray = [];
+      checkResult: function() {
+        const self = this;
 
-      } else {
+        if(self.comparatorArray[0] == self.comparatorArray[1]) {
+          self.score++;
+
+          self.playingCards.forEach(
+            (element) => {
+              if(element.class == self.comparatorArray[0]) {
+
+                element.found = true;
+                console.log(self.playingCards);
+              }
+            }
+          );
+
+          self.comparatorArray = [];
+
+        } else {
+
+          setTimeout(function() {
+            self.playingCards.forEach(
+              (element) => {
+                if(!element.found) {
+                  element.active = false;
+                }
+              }
+            );
+            self.comparatorArray = [];
+          }, 700)
+
+        }
+      }, //fine funzione
+
+      prepareField: function() {
+        const self = this;
+
+
+        self.chooseCards();
+
+        while(self.playingCards.length < self.numberCardsToChoose*2) {
+
+          let index = this.randomNumber(0, self.numberCardsToChoose-1);
+          let element = self.chosenCards[index];
+
+
+          if(element.availability != 0) {
+
+            const newElement = {
+              class: element.class,
+              active: true,
+              found: false
+            };
+
+            self.playingCards.push(newElement);
+            element.availability--;
+          }
+        };
 
         setTimeout(function() {
           self.playingCards.forEach(
             (element) => {
-              if(!element.found) {
-                element.active = false;
-              }
+              element.active = false;
             }
           );
-          self.comparatorArray = [];
-        }, 500)
+        }, self.timeoutSeconds)
+      } //fine funzione
 
-      }
-    } //fine funzione
+    }, //fine methods
 
-  }, //fine methods
-
-  mounted: function() {
-    const self = this;
-
-
-    self.chooseCards();
-
-    while(self.playingCards.length < self.numberCardsToChoose*2) {
-
-      let index = this.randomNumber(0, self.numberCardsToChoose-1);
-      let element = self.chosenCards[index];
-
-
-      if(element.availability != 0) {
-
-        const newElement = {
-          class: element.class,
-          active: false,
-          found: false
-        };
-
-        self.playingCards.push(newElement);
-        element.availability--;
-      }
-    };
-  } //fine mounted
+    mounted: function() {
+    } //fine mounted
 
   }); //fine istanza vue

@@ -1851,10 +1851,12 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   el: "#app",
   data: {
     // mostro/nascondo il terreno di gioco
-    startGame: true,
-    fieldWidth: 40,
-    cardsDivider: 5,
-    numberCardsToChoose: 10,
+    options: ["Normal", "Hard"],
+    startGame: false,
+    fieldWidth: null,
+    cardsDivider: null,
+    numberCardsToChoose: null,
+    timeoutSeconds: null,
     score: 0,
     comparatorArray: [],
     //secondChoice: false,
@@ -1905,6 +1907,29 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   },
   //fine data
   methods: {
+    startGameFunction: function startGameFunction(index) {
+      var self = this;
+
+      switch (self.options[index]) {
+        case "Normal":
+          self.fieldWidth = 40;
+          self.cardsDivider = 5;
+          self.numberCardsToChoose = 10;
+          self.timeoutSeconds = 2000;
+          break;
+
+        case "Hard":
+          self.fieldWidth = 80;
+          self.cardsDivider = 10;
+          self.numberCardsToChoose = 20;
+          self.timeoutSeconds = 5000;
+          break;
+      }
+
+      self.startGame = true;
+      self.prepareField();
+    },
+    //fine funzinoe
     flipCard: function flipCard(index) {
       var self = this;
       var element = self.playingCards[index];
@@ -1959,33 +1984,40 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
             }
           });
           self.comparatorArray = [];
-        }, 500);
+        }, 700);
       }
+    },
+    //fine funzione
+    prepareField: function prepareField() {
+      var self = this;
+      self.chooseCards();
+
+      while (self.playingCards.length < self.numberCardsToChoose * 2) {
+        var index = this.randomNumber(0, self.numberCardsToChoose - 1);
+        var element = self.chosenCards[index];
+
+        if (element.availability != 0) {
+          var newElement = {
+            "class": element["class"],
+            active: true,
+            found: false
+          };
+          self.playingCards.push(newElement);
+          element.availability--;
+        }
+      }
+
+      ;
+      setTimeout(function () {
+        self.playingCards.forEach(function (element) {
+          element.active = false;
+        });
+      }, self.timeoutSeconds);
     } //fine funzione
 
   },
   //fine methods
-  mounted: function mounted() {
-    var self = this;
-    self.chooseCards();
-
-    while (self.playingCards.length < self.numberCardsToChoose * 2) {
-      var index = this.randomNumber(0, self.numberCardsToChoose - 1);
-      var element = self.chosenCards[index];
-
-      if (element.availability != 0) {
-        var newElement = {
-          "class": element["class"],
-          active: false,
-          found: false
-        };
-        self.playingCards.push(newElement);
-        element.availability--;
-      }
-    }
-
-    ;
-  } //fine mounted
+  mounted: function mounted() {} //fine mounted
 
 }); //fine istanza vue
 

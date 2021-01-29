@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
   <!-- foglio di stile personale -->
@@ -14,9 +15,20 @@
 
   <div id="app">
 
-    <div id="start-window" v-if="!startGame"></div>
+    <div id="start-window" class="pos-rel" v-if="!startGame">
+      <h2>Scegli la difficoltà!</h2>
+      <div class="buttons">
+        <button
+        v-for="(option,index) in options"
+        @click="startGameFunction(index)"
+        type="button"
+        name="button">
+        {{ option }}
+        </button>
+      </div>
+    </div>
 
-    <div id="game-window" v-else>
+    <div id="game-window">
 
       <!-- header -->
       <header>

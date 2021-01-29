@@ -9,10 +9,37 @@
   height: 100vh;
   background-color: $appColor;
 }
-#game-window {
+#start-window, #game-window {
   width: 100%;
   height: 100%;
 }
+#start-window {
+  @include setFlexContainer(column, center, center);
+
+  h2 {
+    margin: 20px 0;
+    font-size: 50px;
+  }
+  button {
+    margin: 0 20px;
+    padding: 30px 50px;
+    font-size: 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: $headerColor;
+    box-shadow: 2px 2px 2px 2px #000000;
+  }
+}
+
 .pos-rel {
   position: relative;
+}
+:focus {
+  outline: none;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
