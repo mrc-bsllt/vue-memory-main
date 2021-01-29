@@ -1855,47 +1855,50 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
     fieldWidth: 40,
     cardsDivider: 5,
     numberCardsToChoose: 10,
+    score: 0,
+    isFirstChoice: false,
+    //secondChoice: false,
     // carte
     totalCards: [{
-      "class": "fas fa-cat"
+      "class": "fa-cat"
     }, {
-      "class": "fas fa-crow"
+      "class": "fa-crow"
     }, {
-      "class": "fas fa-dog"
+      "class": "fa-dog"
     }, {
-      "class": "fas fa-hippo"
+      "class": "fa-hippo"
     }, {
-      "class": "fas fa-bicycle"
+      "class": "fa-bicycle"
     }, {
-      "class": "fas fa-car-side"
+      "class": "fa-car-side"
     }, {
-      "class": "fas fa-helicopter"
+      "class": "fa-helicopter"
     }, {
-      "class": "fas fa-rocket"
+      "class": "fa-rocket"
     }, {
-      "class": "fas fa-gift"
+      "class": "fa-gift"
     }, {
-      "class": "fas fa-tshirt"
+      "class": "fa-tshirt"
     }, {
-      "class": "fas fa-dizzy"
+      "class": "fa-dizzy"
     }, {
-      "class": "fas fa-angry"
+      "class": "fa-angry"
     }, {
-      "class": "fas fa-grimace"
+      "class": "fa-grimace"
     }, {
-      "class": "fas fa-grin-tears"
+      "class": "fa-grin-tears"
     }, {
-      "class": "fas fa-grin-tongue-squint"
+      "class": "fa-grin-tongue-squint"
     }, {
-      "class": "fas fa-surprise"
+      "class": "fa-surprise"
     }, {
-      "class": "fas fa-anchor"
+      "class": "fa-anchor"
     }, {
-      "class": "fas fa-ice-cream"
+      "class": "fa-ice-cream"
     }, {
-      "class": "fas fa-lemon"
+      "class": "fa-lemon"
     }, {
-      "class": "fas fa-fish"
+      "class": "fa-fish"
     }],
     chosenCards: [],
     playingCards: []
@@ -1903,10 +1906,41 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   //fine data
   methods: {
     flipCard: function flipCard(index) {
-      this.playingCards[index].active = true;
+      var card = this.playingCards[index];
+
+      if (!this.isFirstChoice && !card.active) {
+        var _firstElement = card;
+        this.isFirstChoice = true;
+        card.active = true; //firstElement = card;
+
+        console.log("firstElement ".concat(_firstElement["class"]));
+      } else if (!card.active) {
+        var secondElement;
+        this.isFirstChoice = false;
+        card.active = true; //secondElement = card;
+
+        console.log("secondElement ".concat(secondElement["class"])); //this.checkScore();
+
+        if (firstElement["class"] === secondElement["class"]) {
+          score++;
+        } else {
+          // firstElement.active = false;
+          // secondElement.active = false;
+          console.log("non sono uguali");
+        }
+      }
+
       this.$forceUpdate();
     },
     //fine funzione
+    // checkScore: function(first, second) {
+    //   if([first].class === [second].class) {
+    //     this.score++;
+    //   } else {
+    //     [first].active = false;
+    //     [second].active = false;
+    //   }
+    // },
     randomNumber: function randomNumber(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     },
@@ -1915,31 +1949,32 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
       var self = this;
 
       while (self.chosenCards.length < self.numberCardsToChoose) {
-        var number = self.randomNumber(0, self.totalCards.length - 1);
-        var element = self.totalCards[number];
+        var index = self.randomNumber(0, self.totalCards.length - 1);
+        var element = self.totalCards[index];
 
         if (!self.chosenCards.includes(element)) {
-          element.active = false;
           element.availability = 2;
-          self.chosenCards.push(element);
+          self.chosenCards.push(element); //console.log(element);
         }
       }
-
-      ;
     } //fine funzione
 
   },
   //fine methods
   mounted: function mounted() {
-    this.chooseCards();
     var self = this;
+    self.chooseCards();
 
     while (self.playingCards.length < self.numberCardsToChoose * 2) {
-      var number = this.randomNumber(0, self.numberCardsToChoose - 1);
-      var element = self.chosenCards[number];
+      var index = this.randomNumber(0, self.numberCardsToChoose - 1);
+      var element = self.chosenCards[index];
 
       if (element.availability != 0) {
-        self.playingCards.push(element);
+        var newElement = {
+          "class": element["class"],
+          active: false
+        };
+        self.playingCards.push(newElement);
         element.availability--;
       }
     }

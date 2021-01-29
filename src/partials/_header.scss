@@ -1,4 +1,6 @@
 header {
+  @include setFlexContainer(row, space-around, center);
   height: $headerHeight;
   background-color: $headerColor;
+
 }

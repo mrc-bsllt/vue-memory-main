@@ -10,68 +10,71 @@ var app = new Vue(
       fieldWidth: 40,
       cardsDivider: 5,
       numberCardsToChoose: 10,
+      score: 0,
+      isFirstChoice: false,
+      //secondChoice: false,
 
       // carte
       totalCards: [
         {
-          class: "fas fa-cat",
+          class: "fa-cat",
         },
         {
-          class: "fas fa-crow",
+          class: "fa-crow",
         },
         {
-          class: "fas fa-dog",
+          class: "fa-dog",
         },
         {
-          class: "fas fa-hippo",
+          class: "fa-hippo",
         },
         {
-          class: "fas fa-bicycle",
+          class: "fa-bicycle",
         },
         {
-          class: "fas fa-car-side",
+          class: "fa-car-side",
         },
         {
-          class: "fas fa-helicopter",
+          class: "fa-helicopter",
         },
         {
-          class: "fas fa-rocket",
+          class: "fa-rocket",
         },
         {
-          class: "fas fa-gift",
+          class: "fa-gift",
         },
         {
-          class: "fas fa-tshirt",
+          class: "fa-tshirt",
         },
         {
-          class: "fas fa-dizzy",
+          class: "fa-dizzy",
         },
         {
-          class: "fas fa-angry",
+          class: "fa-angry",
         },
         {
-          class: "fas fa-grimace",
+          class: "fa-grimace",
         },
         {
-          class: "fas fa-grin-tears",
+          class: "fa-grin-tears",
         },
         {
-          class: "fas fa-grin-tongue-squint",
+          class: "fa-grin-tongue-squint",
         },
         {
-          class: "fas fa-surprise",
+          class: "fa-surprise",
         },
         {
-          class: "fas fa-anchor",
+          class: "fa-anchor",
         },
         {
-          class: "fas fa-ice-cream",
+          class: "fa-ice-cream",
         },
         {
-          class: "fas fa-lemon",
+          class: "fa-lemon",
         },
         {
-          class: "fas fa-fish",
+          class: "fa-fish",
         },
       ],
       chosenCards: [],
@@ -81,9 +84,44 @@ var app = new Vue(
     methods: {
 
       flipCard: function(index) {
-        this.playingCards[index].active = true;
+        const card = this.playingCards[index];
+
+
+
+        if(!this.isFirstChoice && !card.active) {
+          let firstElement = card;
+          this.isFirstChoice = true;
+          card.active = true;
+          //firstElement = card;
+          console.log(`firstElement ${firstElement.class}`);
+
+        } else if(!card.active) {
+          let secondElement;
+          this.isFirstChoice = false;
+          card.active = true;
+          //secondElement = card;
+          console.log(`secondElement ${secondElement.class}`);
+          //this.checkScore();
+          if(firstElement.class === secondElement.class) {
+            score++;
+          } else {
+            // firstElement.active = false;
+            // secondElement.active = false;
+            console.log("non sono uguali");
+          }
+        }
+
         this.$forceUpdate();
       }, //fine funzione
+
+      // checkScore: function(first, second) {
+      //   if([first].class === [second].class) {
+      //     this.score++;
+      //   } else {
+      //     [first].active = false;
+      //     [second].active = false;
+      //   }
+      // },
 
     randomNumber: function(min, max) {
       return Math.floor(Math.random()*(max - min + 1) + min);
@@ -91,38 +129,45 @@ var app = new Vue(
 
     chooseCards: function () {
       const self = this;
-
       while(self.chosenCards.length < self.numberCardsToChoose) {
 
-        let number = self.randomNumber(0, self.totalCards.length-1);
-        const element = self.totalCards[number];
+        let index = self.randomNumber(0, self.totalCards.length-1);
+        const element = self.totalCards[index];
 
         if(!self.chosenCards.includes(element)) {
-          element.active = false;
           element.availability = 2;
           self.chosenCards.push(element);
+          //console.log(element);
         }
-      };
-    } //fine funzione
+      }
+    }, //fine funzione
+
 
   }, //fine methods
 
-    mounted: function() {
+  mounted: function() {
+    const self = this;
 
-      this.chooseCards();
-      const self = this;
 
-      while(self.playingCards.length < self.numberCardsToChoose*2) {
+    self.chooseCards();
 
-        let number = this.randomNumber(0, self.numberCardsToChoose-1);
-        let element = self.chosenCards[number];
+    while(self.playingCards.length < self.numberCardsToChoose*2) {
 
-        if(element.availability != 0) {
+      let index = this.randomNumber(0, self.numberCardsToChoose-1);
+      let element = self.chosenCards[index];
 
-          self.playingCards.push(element);
-          element.availability--;
-        }
-      };
-    } //fine mounted
+
+      if(element.availability != 0) {
+
+        const newElement = {
+          class: element.class,
+          active: false
+        };
+
+        self.playingCards.push(newElement);
+        element.availability--;
+      }
+    };
+  } //fine mounted
 
   }); //fine istanza vue

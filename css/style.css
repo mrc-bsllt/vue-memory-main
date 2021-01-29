@@ -1,7 +1,9 @@
+@import url(https://fonts.googleapis.com/css2?family=Potta+One&display=swap);
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Potta One", cursive;
 }
 
 #app {
@@ -20,6 +22,11 @@
 }
 
 header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
   height: 100px;
   background-color: rgba(43, 39, 41, 0.7);
 }

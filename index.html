@@ -19,7 +19,10 @@
     <div id="game-window" v-else>
 
       <!-- header -->
-      <header></header>
+      <header>
+        <h1>MEMORY - The Game</h1>
+        <p>SCORE: {{ score }}</p>
+      </header>
       <!-- /header -->
 
       <!-- main -->
@@ -37,7 +40,7 @@
               :style="card.active ? 'transform:rotateY(180deg)' : ''">
                 <div class="front-card"></div>
                 <div class="back-card">
-                  <i :class="card.class"></i>
+                  <i :class="'fas ' + card.class"></i>
                 </div>
               </div>
             </div>
