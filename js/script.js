@@ -1856,7 +1856,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
     cardsDivider: 5,
     numberCardsToChoose: 10,
     score: 0,
-    isFirstChoice: false,
+    comparatorArray: [],
     //secondChoice: false,
     // carte
     totalCards: [{
@@ -1906,41 +1906,21 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   //fine data
   methods: {
     flipCard: function flipCard(index) {
-      var card = this.playingCards[index];
+      var self = this;
+      var element = self.playingCards[index];
 
-      if (!this.isFirstChoice && !card.active) {
-        var _firstElement = card;
-        this.isFirstChoice = true;
-        card.active = true; //firstElement = card;
+      if (!element.active) {
+        element.active = true;
+        self.comparatorArray.push(element["class"]);
+      }
 
-        console.log("firstElement ".concat(_firstElement["class"]));
-      } else if (!card.active) {
-        var secondElement;
-        this.isFirstChoice = false;
-        card.active = true; //secondElement = card;
-
-        console.log("secondElement ".concat(secondElement["class"])); //this.checkScore();
-
-        if (firstElement["class"] === secondElement["class"]) {
-          score++;
-        } else {
-          // firstElement.active = false;
-          // secondElement.active = false;
-          console.log("non sono uguali");
-        }
+      if (self.comparatorArray.length == 2) {
+        self.checkResult();
       }
 
       this.$forceUpdate();
     },
     //fine funzione
-    // checkScore: function(first, second) {
-    //   if([first].class === [second].class) {
-    //     this.score++;
-    //   } else {
-    //     [first].active = false;
-    //     [second].active = false;
-    //   }
-    // },
     randomNumber: function randomNumber(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     },
@@ -1957,6 +1937,30 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
           self.chosenCards.push(element); //console.log(element);
         }
       }
+    },
+    //fine funzione
+    checkResult: function checkResult() {
+      var self = this;
+
+      if (self.comparatorArray[0] == self.comparatorArray[1]) {
+        self.score++;
+        self.playingCards.forEach(function (element) {
+          if (element["class"] == self.comparatorArray[0]) {
+            element.found = true;
+            console.log(self.playingCards);
+          }
+        });
+        self.comparatorArray = [];
+      } else {
+        setTimeout(function () {
+          self.playingCards.forEach(function (element) {
+            if (!element.found) {
+              element.active = false;
+            }
+          });
+          self.comparatorArray = [];
+        }, 500);
+      }
     } //fine funzione
 
   },
@@ -1972,7 +1976,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
       if (element.availability != 0) {
         var newElement = {
           "class": element["class"],
-          active: false
+          active: false,
+          found: false
         };
         self.playingCards.push(newElement);
         element.availability--;

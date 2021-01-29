@@ -11,7 +11,7 @@ var app = new Vue(
       cardsDivider: 5,
       numberCardsToChoose: 10,
       score: 0,
-      isFirstChoice: false,
+      comparatorArray: [],
       //secondChoice: false,
 
       // carte
@@ -84,44 +84,24 @@ var app = new Vue(
     methods: {
 
       flipCard: function(index) {
-        const card = this.playingCards[index];
+        const self = this;
+        const element = self.playingCards[index];
 
+        if(!element.active){
 
+          element.active = true;
+          self.comparatorArray.push(element.class);
 
-        if(!this.isFirstChoice && !card.active) {
-          let firstElement = card;
-          this.isFirstChoice = true;
-          card.active = true;
-          //firstElement = card;
-          console.log(`firstElement ${firstElement.class}`);
+        }
 
-        } else if(!card.active) {
-          let secondElement;
-          this.isFirstChoice = false;
-          card.active = true;
-          //secondElement = card;
-          console.log(`secondElement ${secondElement.class}`);
-          //this.checkScore();
-          if(firstElement.class === secondElement.class) {
-            score++;
-          } else {
-            // firstElement.active = false;
-            // secondElement.active = false;
-            console.log("non sono uguali");
-          }
+        if(self.comparatorArray.length == 2) {
+
+          self.checkResult();
+
         }
 
         this.$forceUpdate();
       }, //fine funzione
-
-      // checkScore: function(first, second) {
-      //   if([first].class === [second].class) {
-      //     this.score++;
-      //   } else {
-      //     [first].active = false;
-      //     [second].active = false;
-      //   }
-      // },
 
     randomNumber: function(min, max) {
       return Math.floor(Math.random()*(max - min + 1) + min);
@@ -142,6 +122,39 @@ var app = new Vue(
       }
     }, //fine funzione
 
+    checkResult: function() {
+      const self = this;
+
+      if(self.comparatorArray[0] == self.comparatorArray[1]) {
+        self.score++;
+
+        self.playingCards.forEach(
+          (element) => {
+            if(element.class == self.comparatorArray[0]) {
+
+              element.found = true;
+              console.log(self.playingCards);
+            }
+          }
+        );
+
+        self.comparatorArray = [];
+
+      } else {
+
+        setTimeout(function() {
+          self.playingCards.forEach(
+            (element) => {
+              if(!element.found) {
+                element.active = false;
+              }
+            }
+          );
+          self.comparatorArray = [];
+        }, 500)
+
+      }
+    } //fine funzione
 
   }, //fine methods
 
@@ -161,7 +174,8 @@ var app = new Vue(
 
         const newElement = {
           class: element.class,
-          active: false
+          active: false,
+          found: false
         };
 
         self.playingCards.push(newElement);
