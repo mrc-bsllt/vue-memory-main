@@ -2,7 +2,14 @@ footer {
   position: fixed;
   bottom: 0;
   left: 0;
+  @include setFlexContainer(row, space-between, center);
   width: 100%;
   height: $footerHeight;
+  padding: 0 50px;
   background-color: $headerColor;
+
+  i {
+    font-size: 40px;
+    color: #ffffff;
+  }
 }

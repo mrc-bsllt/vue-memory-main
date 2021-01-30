@@ -14,7 +14,11 @@ var app = new Vue(
       timeoutSeconds: null,
       score: 0,
       comparatorArray: [],
-      //secondChoice: false,
+      startActive: false,
+      minutes: 10,
+      decimalSeconds: 0,
+      second: 0,
+
 
       // carte
       totalCards: [
@@ -104,8 +108,12 @@ var app = new Vue(
             break;
         }
 
-        self.startGame = true;
-        self.prepareField();
+        self.startActive = true;
+        setTimeout(
+          function() {
+            self.startGame = true;
+            self.prepareField();
+          }, 1000);
 
       }, //fine funzinoe
 
@@ -210,11 +218,27 @@ var app = new Vue(
         setTimeout(function() {
           self.playingCards.forEach(
             (element) => {
+
               element.active = false;
+
+              //setInterval(self.timer, 1000);
+
             }
           );
         }, self.timeoutSeconds)
-      } //fine funzione
+      }, //fine funzione
+
+      timer: () => {
+
+        this.second--;
+        if (this.second == 0) {
+          this.second = 9;
+          this.decimalSeconds--;
+        }
+
+
+
+      }
 
     }, //fine methods
 

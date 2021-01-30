@@ -15,20 +15,16 @@
 
   <div id="app">
 
-    <div id="start-window" class="pos-rel" v-if="!startGame">
-      <h2>Scegli la difficoltà!</h2>
-      <div class="buttons">
-        <button
-        v-for="(option,index) in options"
-        @click="startGameFunction(index)"
-        type="button"
-        name="button">
-        {{ option }}
-        </button>
+    <div id="start-window" class="pos-rel animate__animated animate__fadeInRightBig" v-if="!startGame">
+      <div class="content" :class="startActive ? 'animate__animated animate__backOutLeft':''">
+        <h2>Scegli la difficoltà!</h2>
+        <div class="buttons">
+          <button v-for="(option,index) in options" @click="startGameFunction(index)" type="button" name="button">{{ option }}</button>
+        </div>
       </div>
     </div>
 
-    <div id="game-window">
+    <div id="game-window" v-else>
 
       <!-- header -->
       <header>
@@ -39,17 +35,12 @@
 
       <!-- main -->
       <main>
-        <div class="game-field" :style="'width:' + fieldWidth + '%'">
+        <div class="game-field animate__animated animate__fadeInRightBig" :style="'width:' + fieldWidth + '%'">
 
           <!-- carta doppio bg che ruota -->
-          <div
-          class="card-container"
-          :style="'width:calc(100% / ' + cardsDivider + ')'"
-          v-for="(card,index) in playingCards">
+          <div class="card-container" :style="'width:calc(100% / ' + cardsDivider + ')'" v-for="(card,index) in playingCards">
             <div class="card" @click="flipCard(index)">
-              <div
-              class="inner-card pos-rel"
-              :style="card.active ? 'transform:rotateY(180deg)' : ''">
+              <div class="inner-card pos-rel" :style="card.active ? 'transform:rotateY(180deg)' : ''">
                 <div class="front-card"></div>
                 <div class="back-card">
                   <i :class="'fas ' + card.class"></i>
@@ -63,7 +54,10 @@
       <!-- /main -->
 
       <!-- footer -->
-      <footer></footer>
+      <footer>
+        <span>{{ minutes }}:{{ decimalSeconds }}{{ second }}</span>
+        <a href="https://github.com/mrc-bsllt?tab=repositories" class="btn btn-jittery"><i class="fab fa-github"></i></a>
+      </footer>
       <!-- /footer -->
 
     </div>
