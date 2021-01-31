@@ -1857,13 +1857,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
     cardsDivider: null,
     numberCardsToChoose: null,
     timeoutSeconds: null,
+    maxScore: null,
     score: 0,
     comparatorArray: [],
     startActive: false,
     counter: null,
-    minutes: 10,
+    minutes: null,
     decimalSeconds: 0,
-    second: 5,
+    second: 0,
     // carte
     totalCards: [{
       "class": "fa-cat"
@@ -1923,6 +1924,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
           self.cardsDivider = 5;
           self.numberCardsToChoose = 10;
           self.timeoutSeconds = 2000;
+          self.minutes = 3;
+          self.maxScore = 10;
           break;
 
         case "Hard":
@@ -1930,6 +1933,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
           self.cardsDivider = 10;
           self.numberCardsToChoose = 20;
           self.timeoutSeconds = 5000;
+          self.minutes = 5;
+          self.maxScore = 20;
           break;
       }
 
@@ -1979,12 +1984,18 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
 
       if (self.comparatorArray[0] == self.comparatorArray[1]) {
         self.score++;
-        self.playingCards.forEach(function (element) {
-          if (element["class"] == self.comparatorArray[0]) {
-            element.found = true;
-            console.log(self.playingCards);
-          }
-        });
+
+        if (self.score != self.maxScore) {
+          self.playingCards.forEach(function (element) {
+            if (element["class"] == self.comparatorArray[0]) {
+              element.found = true;
+            }
+          });
+        } else {
+          self.activeFinal = true;
+          self.message = "Hai vinto!";
+        }
+
         self.comparatorArray = [];
       } else {
         setTimeout(function () {
