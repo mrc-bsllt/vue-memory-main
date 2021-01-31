@@ -1860,9 +1860,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
     score: 0,
     comparatorArray: [],
     startActive: false,
+    counter: null,
     minutes: 10,
     decimalSeconds: 0,
-    second: 0,
+    second: 5,
     // carte
     totalCards: [{
       "class": "fa-cat"
@@ -1906,7 +1907,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
       "class": "fa-fish"
     }],
     chosenCards: [],
-    playingCards: []
+    playingCards: [],
+    // schermata finale
+    activeFinal: false,
+    message: ""
   },
   //fine data
   methods: {
@@ -2018,22 +2022,28 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
         self.playingCards.forEach(function (element) {
           element.active = false;
         });
-        setInterval(self.timer, 1000);
+        self.counter = setInterval(self.timer, 1000);
       }, self.timeoutSeconds);
     },
     //fine funzione
     timer: function timer() {
-      var self = this;
+      var min = this.minutes;
+      var dSec = this.decimalSeconds;
+      var sec = this.second;
 
-      if (self.second == 0 && self.decimalSeconds == 0) {
-        self.minutes--;
-        self.decimalSeconds = 5;
-        self.second = 9;
-      } else if (self.second != 0 && self.decimalSeconds != 0) {
-        self.second--;
-      } else if (self.second == 0 && self.decimalSeconds != 0) {
-        self.decimalSeconds--;
-        self.second = 9;
+      if (sec == 0 && dSec == 0 && min != 0) {
+        this.minutes--;
+        this.decimalSeconds = 5;
+        this.second = 9;
+      } else if (sec != 0 && dSec != 0 || sec != 0 && dSec == 0) {
+        this.second--;
+      } else if (sec == 0 && dSec != 0) {
+        this.decimalSeconds--;
+        this.second = 9;
+      } else if (min == 0 && dSec == 0 && sec == 0) {
+        clearInterval(this.counter);
+        this.message = "Hai perso!";
+        this.activeFinal = true;
       }
     }
   },

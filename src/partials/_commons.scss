@@ -5,14 +5,13 @@
   font-family: 'Potta One', cursive;
 }
 #app {
-  width: 100%;
-  height: 100vh;
+  @include setWH(100%, 100vh);
   background-color: $appColor;
   overflow: hidden;
 }
 #start-window, #game-window {
-  width: 100%;
-  height: 100%;
+  @include setWH(100%, 100%);
+
 }
 #start-window {
   @include setFlexContainer(column, center, center);
@@ -29,6 +28,15 @@
     cursor: pointer;
     background-color: $headerColor;
     box-shadow: 2px 2px 2px 2px #000000;
+  }
+}
+
+#final-window {
+  @include setFlexContainer(row, center, center);
+  @include setWH(100%, 100vh);
+
+  h2 {
+    font-size: 150px;
   }
 }
 

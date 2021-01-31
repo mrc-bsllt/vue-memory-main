@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div id="game-window" v-else>
+    <div id="game-window" v-else-if="startGame && !activeFinal">
 
       <!-- header -->
       <header>
@@ -60,6 +60,11 @@
       </footer>
       <!-- /footer -->
 
+    </div
+    >
+
+    <div id="final-window" v-else>
+      <h2>{{ message }}</h2>
     </div>
 
   </div>
