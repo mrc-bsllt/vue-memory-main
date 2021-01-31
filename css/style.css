@@ -146,6 +146,7 @@ main .game-field {
   justify-content: flex-start;
   align-items: stretch;
   flex-wrap: wrap;
+  height: 100%;
   margin: auto;
 }
 main .game-field .card-container {
@@ -153,7 +154,7 @@ main .game-field .card-container {
 }
 main .card {
   width: 100px;
-  height: 125px;
+  height: 100%;
   margin: auto;
   border: 3px solid #2B2729;
   border-radius: 3px;

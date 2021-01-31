@@ -4,6 +4,7 @@ main {
 
   .game-field {
     @include setFlexContainer(row, flex-start, stretch);
+    height: 100%;
     margin: auto;
 
     .card-container {
@@ -17,7 +18,6 @@ main {
     height: $cardHeight;
     margin: auto;
     border: 3px solid #2B2729;
-    //perspective: 1000px;
     border-radius: 3px;
     background-color: $backCardColor;
     cursor: pointer;
