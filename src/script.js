@@ -221,24 +221,28 @@ var app = new Vue(
 
               element.active = false;
 
-              //setInterval(self.timer, 1000);
-
             }
           );
+
+          setInterval(self.timer, 1000);
+
         }, self.timeoutSeconds)
       }, //fine funzione
 
-      timer: () => {
+      timer: function() {
+        const self= this;
 
-        this.second--;
-        if (this.second == 0) {
-          this.second = 9;
-          this.decimalSeconds--;
+        if(self.second == 0 && self.decimalSeconds == 0) {
+          self.minutes--;
+          self.decimalSeconds = 5;
+          self.second = 9;
+        } else if (self.second != 0 && self.decimalSeconds != 0) {
+          self.second--;
+        } else if (self.second == 0 && self.decimalSeconds != 0) {
+          self.decimalSeconds--;
+          self.second = 9;
         }
-
-
-
-      }
+      },
 
     }, //fine methods
 
