@@ -99,6 +99,7 @@ var app = new Vue(
       startGameFunction: function(index) {
         const self = this;
 
+        // Cambio i parametri di gioco in base alla difficoltà scelta
         switch(self.options[index]) {
           case "Normal":
             self.fieldWidth = 40;
@@ -119,10 +120,10 @@ var app = new Vue(
             break;
         }
 
-        self.startActive = true;
+        self.startActive = true; //Attivo l'animazione al click della modalità
         setTimeout(
           function() {
-            self.startGame = true;
+            self.startGame = true; //Mostro il terreno di gioco dopo un secodo dal click
             self.prepareField();
           }, 1000);
 
@@ -130,8 +131,9 @@ var app = new Vue(
 
       flipCard: function(index) {
         const self = this;
-        const element = self.playingCards[index];
+        const element = self.playingCards[index]; //Carta cliccata
 
+        // se la carta non risulta attiva la giro e la pusho nell'array di comparazione di coppia
         if(!element.active){
 
           element.active = true;
@@ -139,6 +141,7 @@ var app = new Vue(
 
         }
 
+        // se l'array di comparazione coppia ha due elementi controllo se sono uguali
         if(self.comparatorArray.length == 2) {
 
           self.checkResult();
@@ -152,6 +155,7 @@ var app = new Vue(
         return Math.floor(Math.random()*(max - min + 1) + min);
       }, //fine funzione
 
+      // funzione per scegliere le carte da utilizzare nella partita corrente
       chooseCards: function () {
         const self = this;
         while(self.chosenCards.length < self.numberCardsToChoose) {
@@ -162,17 +166,19 @@ var app = new Vue(
           if(!self.chosenCards.includes(element)) {
             element.availability = 2;
             self.chosenCards.push(element);
-            //console.log(element);
           }
         }
       }, //fine funzione
 
+      //funzione che controlla se le due carte cliccato sono uguali
       checkResult: function() {
         const self = this;
 
+        //se le carte sono uguali, aumento il punteggio di 1
         if(self.comparatorArray[0] == self.comparatorArray[1]) {
           self.score++;
 
+          //se il giocatore non ha anora raggiunto il punteggio massimo, cambio il valore found delle carte a true, per lasciarle girate nel campo di gioco
           if(self.score != self.maxScore) {
             self.playingCards.forEach(
               (element) => {
@@ -181,7 +187,7 @@ var app = new Vue(
                 }
               }
             );
-          } else {
+          } else { //se il giocatore raggiunge il punteggio massimo, ha vinto la partita
             self.activeFinal = true;
             self.message = "Hai vinto!";
           }
@@ -189,7 +195,7 @@ var app = new Vue(
           self.comparatorArray = [];
 
         } else {
-
+          //se le carte non sono uguali, si rigirano dopo 0.7 secondi
           setTimeout(function() {
             self.playingCards.forEach(
               (element) => {
@@ -264,6 +270,25 @@ var app = new Vue(
           this.activeFinal = true;
         }
       },
+
+      //funzione attivabile al bottone Aiuto!, gira tutte le carte di faccia, dopo tot secondi le coppie di carte non trovare in precedenza, si rigirano di dorso
+      flipAllCards: function () {
+        //ciclo tutte le carte e le giro
+        this.playingCards.forEach(
+          (element) => {
+            element.active = true;
+
+            //dopo 2 secondi, rigiro tutte le carte di dorso, tranne quelle che sono già state trovate
+            setTimeout(function() {
+                if(!element.found) {
+                  element.active = false;
+                }
+              }, 2000);
+          }
+        );
+
+
+      } // fine funzione
 
     }, //fine methods
 

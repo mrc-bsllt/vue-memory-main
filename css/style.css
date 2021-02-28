@@ -209,6 +209,10 @@ footer {
   padding: 0 50px;
   background-color: rgba(43, 39, 41, 0.7);
 }
+footer button {
+  padding: 2px 15px;
+  border-radius: 5px;
+}
 footer i {
   font-size: 40px;
   color: #ffffff;

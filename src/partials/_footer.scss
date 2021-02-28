@@ -8,6 +8,10 @@ footer {
   padding: 0 50px;
   background-color: $headerColor;
 
+  button {
+    padding: 2px 15px;
+    border-radius: 5px;
+  }
   i {
     font-size: 40px;
     color: #ffffff;
